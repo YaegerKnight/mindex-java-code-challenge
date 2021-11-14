@@ -60,16 +60,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> directReportees = employee.getDirectReports();
 
         Queue<String> employeeIds = new LinkedList<>();
+
+        // To contain all the unique reporting employees
         Set<String> totalReportingEmployeeIds = new HashSet<>();
 
+        // Adding all directReports for the current employee
+        // into the queue
         if (employee.getDirectReports() != null){
             for (Employee e: directReportees){
                 employeeIds.add(e.getEmployeeId());
             }
         }
 
+        // Checking how many direct reports exist for each employeeId in the queue
         while(!employeeIds.isEmpty()){
-
+            // Pop first element of the queue
             String tempEmployeeId = employeeIds.remove();
             Employee tempEmployee = employeeRepository.findByEmployeeId(tempEmployeeId);
 

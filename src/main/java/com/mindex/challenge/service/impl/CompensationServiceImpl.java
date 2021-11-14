@@ -23,16 +23,22 @@ public class CompensationServiceImpl implements CompensationService {
     @Override
     public Compensation create(Compensation compensation) {
 
+        LOG.debug("Creating compensation for employee with id [{}]", compensation.getEmployee().getEmployeeId());
+
+        // Added null check
         if(compensation.getEmployee().getEmployeeId() == null){
             throw new NullPointerException("Employee ID not found");
         }
+
         Employee employee = employeeRepository.findByEmployeeId(compensation.getEmployee().getEmployeeId());
 
+        // Creating new compensation object and setting it's properties
         Compensation employeeCompensation = new Compensation();
         employeeCompensation.setEmployee(employee);
         employeeCompensation.setSalary(compensation.getSalary());
         employeeCompensation.setEffectiveDate(compensation.getEffectiveDate());
 
+        // Inserting the compensation object into DB
         compensationRepository.insert(employeeCompensation);
 
         return employeeCompensation;
@@ -41,13 +47,15 @@ public class CompensationServiceImpl implements CompensationService {
 
     @Override
     public Compensation read(String employeeId) {
-        LOG.debug("Creating compensation for employee with id [{}]", employeeId);
+        LOG.debug("Reading compensation for employee with id [{}]", employeeId);
 
         if(employeeId == null){
             throw new NullPointerException(" EmployeeId provided is null");
         }
 
-        Compensation compensation = compensationRepository.findByEmployee(employeeRepository.findByEmployeeId(employeeId));
+        Compensation compensation = compensationRepository.findByEmployee(
+                                    employeeRepository.findByEmployeeId(employeeId)
+                                    );
 
         if(compensation == null){
             throw new NullPointerException(" Employee does not exist");

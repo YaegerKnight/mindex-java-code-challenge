@@ -10,6 +10,10 @@ public class ReportingStructure {
         this.numberOfReports = numberOfReports;
     }
 
+    public ReportingStructure() {
+
+    }
+
     public Employee getEmployee() {
         return employee;
     }
