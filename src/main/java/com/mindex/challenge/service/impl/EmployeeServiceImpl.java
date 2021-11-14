@@ -57,6 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
 
+        if(employee == null){
+            throw new NullPointerException("Employee does not exist");
+        }
+        
         List<Employee> directReportees = employee.getDirectReports();
 
         Queue<String> employeeIds = new LinkedList<>();
