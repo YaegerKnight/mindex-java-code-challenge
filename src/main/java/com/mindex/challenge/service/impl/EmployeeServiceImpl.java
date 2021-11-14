@@ -52,6 +52,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ReportingStructure getNumberOfReports(String employeeId){
 
+        if(employeeId == null){
+            throw new NullPointerException(" EmployeeId provided is null");
+        }
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
 
         List<Employee> directReportees = employee.getDirectReports();

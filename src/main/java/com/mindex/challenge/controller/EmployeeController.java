@@ -37,10 +37,10 @@ public class EmployeeController {
         return employeeService.update(employee);
     }
 
-    @PostMapping("/employee/reporting")
-    public ReportingStructure getReports(@RequestBody Employee employee) {
-        LOG.debug("Received reportingStructure request for [{}]", employee.getEmployeeId());
+    @GetMapping("/employee/reportingStructure/{employeeId}")
+    public ReportingStructure getReports(@PathVariable String employeeId) {
+        LOG.debug("Received reportingStructure request for [{}]", employeeId);
 
-        return employeeService.getNumberOfReports(employee.getEmployeeId());
+        return employeeService.getNumberOfReports(employeeId);
     }
 }
